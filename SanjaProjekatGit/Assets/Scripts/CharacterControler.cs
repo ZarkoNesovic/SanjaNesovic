@@ -25,6 +25,10 @@ public class CharacterControler : MonoBehaviour
     //Nije na zemlji
     bool isGrounded = false;
 
+    //Ne kliza
+    bool sliding = false;
+    float slideTime = 0;
+    public float maxSlideTime = 1.5f;
     //Potreban nam je transform objekat GroungCheck-a da bi proverili da li su noge naseg karaktera na zemlji
     public Transform groundCheck;
     float groundRadius = 0.2f;//Velicina kruga za proveru zemlje
@@ -75,19 +79,22 @@ public class CharacterControler : MonoBehaviour
 
         */
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(move * topSpeed, GetComponent<Rigidbody2D>().velocity.y);
-
-        //U animatoru smo definisali parametar Speed na osnovu koga ce nas karakter menjati stanja.Ovde samo dodeljujemo vrednost tom parametru
-        anim.SetFloat("Speed", Mathf.Abs(move));
-
-
-        if (move > 0 && !facingRight)
+        if (!sliding)
         {
-            Flip();
-        }
-        else if (move < 0 && facingRight)
-        {
-            Flip();
+            GetComponent<Rigidbody2D>().velocity = new Vector2(move * topSpeed, GetComponent<Rigidbody2D>().velocity.y);
+
+            //U animatoru smo definisali parametar Speed na osnovu koga ce nas karakter menjati stanja.Ovde samo dodeljujemo vrednost tom parametru
+            anim.SetFloat("Speed", Mathf.Abs(move));
+
+
+            if (move > 0 && !facingRight)
+            {
+                Flip();
+            }
+            else if (move < 0 && facingRight)
+            {
+                Flip();
+            }
         }
     }
 
@@ -102,6 +109,27 @@ public class CharacterControler : MonoBehaviour
             if (!doubleJump && !isGrounded)
             {
                 doubleJump = true;
+            }
+        }
+
+        float Brzina =GetComponent< Rigidbody2D > ().velocity.x;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !sliding && (Brzina!=0))
+        {
+            slideTime = 0f;
+            anim.SetBool("Sliding", true);
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            sliding = true;
+        }
+
+        if (sliding)
+        {
+            slideTime += Time.deltaTime;
+            if (slideTime >= maxSlideTime)
+            {
+                sliding = false;
+                anim.SetBool("Sliding", false);
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
 

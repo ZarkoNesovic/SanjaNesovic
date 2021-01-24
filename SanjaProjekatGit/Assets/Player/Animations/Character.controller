@@ -287,32 +287,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-245854140440809113
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Jump
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 97dce65dffd049040a954bb831515086, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -369,20 +343,17 @@ AnimatorStateMachine:
     m_State: {fileID: -5167185311041208400}
     m_Position: {x: 290, y: 130, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -245854140440809113}
-    m_Position: {x: 305, y: 195, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -8375687069471059445}
-    m_Position: {x: 340, y: 260, z: 0}
+    m_Position: {x: 300, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6451605670678355919}
     m_Position: {x: 570, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1666172067479080069}
-    m_Position: {x: 370, y: 330, z: 0}
+    m_Position: {x: 330, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3597589091344425145}
-    m_Position: {x: 420, y: 400, z: 0}
+    m_Position: {x: 380, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7811758303194822165}
     m_Position: {x: 330, y: -80, z: 0}
