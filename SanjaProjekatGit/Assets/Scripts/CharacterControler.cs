@@ -26,7 +26,7 @@ public class CharacterControler : MonoBehaviour
     bool isGrounded = false;
 
     //Ne kliza
-    bool sliding = false;
+    public bool sliding = false;
     float slideTime = 0;
     public float maxSlideTime = 1.5f;
     //Potreban nam je transform objekat GroungCheck-a da bi proverili da li su noge naseg karaktera na zemlji

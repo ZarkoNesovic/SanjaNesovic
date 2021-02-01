@@ -8,12 +8,12 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] Text HealthText;
     
 
-    float maxHealth = 100;
-    float currentHealth=100;
+    float maxHealth = 1000;
+    float currentHealth=1000;
 
     void Start()
     {
-        
+        HealthText.text = "Health " + currentHealth.ToString();
     }
 
     // Update is called once per frame
@@ -22,16 +22,26 @@ public class CharacterManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.P))
         {
-            currentHealth -= 5;
+            currentHealth = 1000;
             HealthText.text = "Health " + currentHealth.ToString();
+        }
+        if (GetComponent<CharacterControler>().sliding)
+        {
+            GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+        else
+        {
+            GetComponent<CapsuleCollider2D>().enabled = true;
         }
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
         if(col.gameObject.tag=="Saw"){
-            currentHealth -= 5;
+            currentHealth -= 1;
             HealthText.text = "Health " + currentHealth.ToString();
         }
+        //Sliding sam stavio privremeno na public
+        
     }
 }
