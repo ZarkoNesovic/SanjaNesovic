@@ -40,6 +40,10 @@ public class CharacterControler : MonoBehaviour
 
     bool doubleJump = false;
 
+    //Karakter nije ziv
+
+    bool dead = false;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -78,8 +82,8 @@ public class CharacterControler : MonoBehaviour
           I
 
         */
-
-        if (!sliding)
+        //dead = anim.GetBool("Dead");
+        if (!sliding && !dead)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(move * topSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
@@ -100,39 +104,42 @@ public class CharacterControler : MonoBehaviour
 
     void Update()
     {
-        //Nije na zemlji
-        if ((isGrounded || !doubleJump) && Input.GetKeyDown(KeyCode.Space))
+        dead = anim.GetBool("Dead");
+        if (!dead)
         {
-            anim.SetBool("Ground", false);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
-
-            if (!doubleJump && !isGrounded)
+            //Nije na zemlji
+            if ((isGrounded || !doubleJump) && Input.GetKeyDown(KeyCode.Space))
             {
-                doubleJump = true;
+                anim.SetBool("Ground", false);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
+
+                if (!doubleJump && !isGrounded)
+                {
+                    doubleJump = true;
+                }
+            }
+
+            float Brzina = GetComponent<Rigidbody2D>().velocity.x;
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !sliding && (Brzina != 0))
+            {
+                anim.SetBool("Sliding", true);
+                sliding = true;                
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;                
+                slideTime = 0f;
+            }
+
+            if (sliding)
+            {
+                slideTime += Time.deltaTime;
+                if (slideTime >= maxSlideTime)
+                {
+                    sliding = false;
+                    anim.SetBool("Sliding", false);
+                    gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                }
             }
         }
-
-        float Brzina =GetComponent< Rigidbody2D > ().velocity.x;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !sliding && (Brzina!=0))
-        {
-            slideTime = 0f;
-            anim.SetBool("Sliding", true);
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            sliding = true;
-        }
-
-        if (sliding)
-        {
-            slideTime += Time.deltaTime;
-            if (slideTime >= maxSlideTime)
-            {
-                sliding = false;
-                anim.SetBool("Sliding", false);
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
-            }
-        }
-
     }
 
     void Flip()
